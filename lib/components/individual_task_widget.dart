@@ -9,9 +9,11 @@ class IndividualTaskWidget extends StatefulWidget {
   const IndividualTaskWidget({
     super.key,
     required this.tasksDoc,
+    required this.checkAction,
   });
 
   final TasksRecord? tasksDoc;
+  final Future Function()? checkAction;
 
   @override
   State<IndividualTaskWidget> createState() => _IndividualTaskWidgetState();
@@ -71,6 +73,11 @@ class _IndividualTaskWidgetState extends State<IndividualTaskWidget> {
                   value: _model.checkboxValue ??= widget.tasksDoc!.completed,
                   onChanged: (newValue) async {
                     safeSetState(() => _model.checkboxValue = newValue!);
+                    if (newValue!) {
+                      await widget.checkAction?.call();
+                    } else {
+                      await widget.checkAction?.call();
+                    }
                   },
                   side: BorderSide(
                     width: 2,
