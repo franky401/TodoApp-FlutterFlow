@@ -1,0 +1,55 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "User Document",
+    "type": "object",
+    "properties": {
+        "birthdate": {
+            "description": "The user's birthdate in ISO 8601 format with timezone",
+            "type": "string",
+            "format": "date-time",
+            "examples": [
+                "2024-09-03T00:00:00-04:00"
+            ]
+        },
+        "created_time": {
+            "description": "The timestamp when the user was created in ISO 8601 format with timezone",
+            "type": "string",
+            "format": "date-time",
+            "examples": [
+                "2024-09-23T23:37:43-04:00"
+            ]
+        },
+        "display_name": {
+            "description": "The display name of the user",
+            "type": "string",
+            "minLength": 1,
+            "examples": [
+                "franky"
+            ]
+        },
+        "email": {
+            "description": "The user's email address",
+            "type": "string",
+            "format": "email",
+            "examples": [
+                "frankyaraujo@uri.edu"
+            ]
+        },
+        "uid": {
+            "description": "The unique identifier for the user",
+            "type": "string",
+            "minLength": 1,
+            "examples": [
+                "xZjFCvWY2Laux7v0ELtVnO4SKLW2"
+            ]
+        }
+    },
+    "required": [
+        "birthdate",
+        "created_time",
+        "display_name",
+        "email",
+        "uid"
+    ],
+    "additionalProperties": false
+}
