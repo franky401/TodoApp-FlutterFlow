@@ -5,25 +5,25 @@ import '/components/individual_task_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'tasks_model.dart';
-export 'tasks_model.dart';
+import 'completed_model.dart';
+export 'completed_model.dart';
 
-class TasksWidget extends StatefulWidget {
-  const TasksWidget({super.key});
+class CompletedWidget extends StatefulWidget {
+  const CompletedWidget({super.key});
 
   @override
-  State<TasksWidget> createState() => _TasksWidgetState();
+  State<CompletedWidget> createState() => _CompletedWidgetState();
 }
 
-class _TasksWidgetState extends State<TasksWidget> {
-  late TasksModel _model;
+class _CompletedWidgetState extends State<CompletedWidget> {
+  late CompletedModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TasksModel());
+    _model = createModel(context, () => CompletedModel());
   }
 
   @override
@@ -86,7 +86,7 @@ class _TasksWidgetState extends State<TasksWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  'Tasks',
+                  'Completed',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Inter Tight',
                         letterSpacing: 0.0,
@@ -103,7 +103,7 @@ class _TasksWidgetState extends State<TasksWidget> {
                         )
                         .where(
                           'completed',
-                          isEqualTo: false,
+                          isEqualTo: true,
                         ),
                   ),
                   builder: (context, snapshot) {
@@ -131,36 +131,16 @@ class _TasksWidgetState extends State<TasksWidget> {
                       itemBuilder: (context, listViewIndex) {
                         final listViewTasksRecord =
                             listViewTasksRecordList[listViewIndex];
-                        return InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed(
-                              'details',
-                              queryParameters: {
-                                'taskDoc': serializeParam(
-                                  listViewTasksRecord,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'taskDoc': listViewTasksRecord,
-                              },
-                            );
+                        return IndividualTaskWidget(
+                          key: Key(
+                              'Key6mx_${listViewIndex}_of_${listViewTasksRecordList.length}'),
+                          tasksDoc: listViewTasksRecord,
+                          checkAction: () async {
+                            await listViewTasksRecord.reference
+                                .update(createTasksRecordData(
+                              completed: false,
+                            ));
                           },
-                          child: IndividualTaskWidget(
-                            key: Key(
-                                'Keysc6_${listViewIndex}_of_${listViewTasksRecordList.length}'),
-                            tasksDoc: listViewTasksRecord,
-                            checkAction: () async {
-                              await listViewTasksRecord.reference
-                                  .update(createTasksRecordData(
-                                completed: true,
-                              ));
-                            },
-                          ),
                         );
                       },
                     );
