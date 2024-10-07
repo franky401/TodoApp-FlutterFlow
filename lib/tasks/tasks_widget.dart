@@ -131,36 +131,16 @@ class _TasksWidgetState extends State<TasksWidget> {
                       itemBuilder: (context, listViewIndex) {
                         final listViewTasksRecord =
                             listViewTasksRecordList[listViewIndex];
-                        return InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed(
-                              'details',
-                              queryParameters: {
-                                'taskDoc': serializeParam(
-                                  listViewTasksRecord,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'taskDoc': listViewTasksRecord,
-                              },
-                            );
+                        return IndividualTaskWidget(
+                          key: Key(
+                              'Keysc6_${listViewIndex}_of_${listViewTasksRecordList.length}'),
+                          tasksDoc: listViewTasksRecord,
+                          checkAction: () async {
+                            await listViewTasksRecord.reference
+                                .update(createTasksRecordData(
+                              completed: true,
+                            ));
                           },
-                          child: IndividualTaskWidget(
-                            key: Key(
-                                'Keysc6_${listViewIndex}_of_${listViewTasksRecordList.length}'),
-                            tasksDoc: listViewTasksRecord,
-                            checkAction: () async {
-                              await listViewTasksRecord.reference
-                                  .update(createTasksRecordData(
-                                completed: true,
-                              ));
-                            },
-                          ),
                         );
                       },
                     );
